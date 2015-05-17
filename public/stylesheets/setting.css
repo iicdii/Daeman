@@ -1,0 +1,224 @@
+body {
+  background-color: #b5afaf;
+}
+ul {
+  list-style-type: none;
+}
+a:hover{
+  text-decoration: none;
+}
+
+aside{
+  position: fixed;
+  border: 1px solid #cec4c2;
+  border-width: 0 1px 0 0;
+  z-index: 0;
+  top: 80px;
+  width: 350px;
+  height: 100%;
+  overflow: auto;
+  background-color: #fff;
+}
+aside div.title {
+  margin: 20px;
+  line-height: 30px;
+  overflow: hidden;
+}
+aside div.title h2{
+  color: #4ca2f7;
+  font-size: 18px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+aside ol.list {
+  border-top: 1px solid #ede4e2;
+  padding: 0;
+}
+
+aside ol.list li a{
+  display: block;
+  padding: 0 25px;
+  border-bottom: 1px solid #ede4e2;
+  border-width: 1px 0;
+  height: 39px;
+  line-height: 39px;
+  color: #bda9a6;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #fbf9f9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+aside ol.list li a:hover {
+	color: #333;
+  background-color: #ede4e2;
+}
+
+aside ol.list li.current a{
+  border-left: 3px solid #4ca2f7;
+  display: block;
+  padding: 0 25px;
+  border-bottom: 1px solid #ede4e2;
+  height: 39px;
+  line-height: 39px;
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.content{
+  position: absolute;
+  margin: 20px;
+  left: 350px;
+  top: 80px;
+}
+.content div.main{
+  display: block;
+  width: 860px;
+}
+.content div.main div.setting{
+  margin-bottom: 5px;
+  border: 1px solid #c5ced0;
+  background-color: #f9fbfb;
+}
+.content div.main div.setting img{
+  max-width:256px; 
+  width: expression(this.width > 256 ? 256: true); 
+  height: auto;
+}
+
+/* 프로필 */
+.content div.main div.setting div.profile h2 {
+  margin: 0;
+  padding: 0 15px;
+  height: 40px;
+  line-height: 40px;
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.content div.main div.setting div.profile p {
+  margin: 0;
+  padding: 15px 25px;
+  border-top: 1px solid #e7eaeb;
+}
+
+.content div.main div.setting div.profile p label {
+  margin: 0px 15px 0px 0px;
+  padding-right: 15px;
+  border-right: 2px solid #c5ced0;
+  width: 90px;
+  float: left;
+  color: #999;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: right;
+}
+
+.content div.main div.setting div.profile p em {
+  font-style: normal;
+  color: #333;
+  font-size: 13px;
+}
+/* 사진 변경 */
+.content div.main div.setting div.setpicture{
+  display: none;
+}
+
+.content div.main div.setting div.setpicture h2 {
+  margin: 0;
+  padding: 0 15px;
+  height: 40px;
+  line-height: 40px;
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.content div.main div.setting div.setpicture p {
+  margin: 0;
+  padding: 15px 25px;
+  border-top: 1px solid #e7eaeb;
+}
+
+.content div.main div.setting div.setpicture p label {
+  margin: 0px 15px 0px 0px;
+  padding-right: 15px;
+  border-right: 2px solid #c5ced0;
+  width: 90px;
+  float: left;
+  color: #999;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: right;
+}
+
+.content div.main div.setting div.setpicture p em {
+  font-style: normal;
+  color: #333;
+  font-size: 13px;
+}
+
+.content div.main div.setting div.setpicture p input.file {
+  margin-left: 100px;
+  height: 30px;
+  width: 40%;
+}
+
+.content div.main div.setting p span.description {
+  margin-left: 10px;
+  color: #999;
+  font-size: 12px;
+  text-align: right;
+  display: block;
+}
+
+/* 알림 변경 */
+.content div.main div.setting div.setAlarm {
+  display: none;
+}
+.content div.main div.setting div.setAlarm h2 {
+  margin: 0;
+  padding: 0 15px;
+  height: 40px;
+  line-height: 40px;
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+}
+.content div.main div.setting div.setAlarm p {
+  margin: 0;
+  padding: 15px 25px;
+  border-top: 1px solid #e7eaeb;
+}
+.content div.main div.setting div.setAlarm p label {
+  margin: 0px 15px 0px 0px;
+  padding-right: 15px;
+  border-right: 2px solid #c5ced0;
+  width: 90px;
+  float: left;
+  color: #999;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: right;
+}
+.content div.main div.setting div.setAlarm p em {
+  font-style: normal;
+  color: #333;
+  font-size: 13px;
+}
+
+#svg{
+  width: 54px;
+  height: 54px;
+}

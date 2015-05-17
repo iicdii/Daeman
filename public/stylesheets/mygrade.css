@@ -1,0 +1,11 @@
+.container .page-header{
+  margin-top: 0px;
+}
+
+.input-group input[type="text"]{
+  width: 62%;
+}
+
+.input-group input[type="number"]{
+  width: 23%;
+}

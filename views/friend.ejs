@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>대학만렙</title>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/friend.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/nav.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/pnotify.custom.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <!-- Menu -->
+    <% include nav %>
+    <!-- Menu End-->
+    <!-- Aside -->
+    <aside id="aside">
+      <div class="title" v-style="display:title_display"><h2>{{aside_title}}</h2></div>
+      <div class="profile_title" v-style="display:profile_title_display">
+        <img class="picture" v-attr="src:picture">
+        <h2>{{nickname}}</h2>
+        <p>{{university}} {{year}}학번</p>
+      </div>
+      <div class="information">
+        <p v-style="display:information_count_display">총 <span v-text="friendCount" class="friendCount"></span>명의 친구가 있습니다.</p>
+        <ul v-style="display:information_item_display">
+          <li><a v-attr="href:information_link_href">http://daeman-202211.apne1.nitrousbox.com{{information_link_href}}</a></li>
+        </ul>
+      </div>
+      <ol class="list">
+        <li v-repeat="lists" v-class="current"><a v-on="click:select($index)">{{name}}</a></li>
+      </ol>
+    </aside>
+    <!-- Aside End-->
+    <!-- Content -->
+    <div class="content">
+      <div class="main">
+        <div class="myfriend">
+          <div class="board" v-repeat="lists">
+            <article>
+              <img v-attr="src:picture">
+              <a v-attr="href:link"><h2>{{nickname}}</h2></a>
+              <p>{{university}} {{year}}학번</p>
+              <ul class="buttons">
+                <li title="친구 삭제"><button type="button" v-on="click:remove($index)" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button></li>
+              </ul>
+            </article>
+          </div>
+        </div>
+        <div class="addfriend">
+          <div class="col-md-9">
+            <div class="input-group">
+              <input type="text" id="requestId" class="form-control" placeholder="친구요청 할 아이디를 입력해주세요." autofocus>
+              <span class="input-group-btn">
+                <button class="btn btn-default" id="requestFriend" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="grade">
+          <div class="well well-sm" id="total_view">
+            <h5><strong>합계</strong>
+              요구학점 : <span v-text="total_desire"></span>점 / 
+              현재학점 : <span v-text="total_current"></span>점 / 
+              필요학점 : <span v-text="total_need"></span>점</h5>
+          </div>
+          <div class="graph">
+            <div class="panel panel-default">
+              <div class="panel-body" id="graph_view">
+                교양필수 <span class="num">{{culture_essential_valuenow}}%</span>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success progress-bar-striped" id="culture-essential-graph" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="right" v-attr="data-original-title:culture_essential_width, aria-valuenow:culture_essential_valuenow"  v-style="width:culture_essential_width"></div>
+                </div>
+                교양선택 <span class="num">{{culture_selection_valuenow}}%</span>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-info progress-bar-striped" id="culture-selection-graph" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="right" v-attr="data-original-title:culture_selection_width, aria-valuenow:culture_selection_valuenow"  v-style="width:culture_selection_width"></div>
+                </div>
+                전공필수 <span class="num">{{major_essential_valuenow}}%</span>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-warning progress-bar-striped" id="major-essential-graph" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="right" v-attr="data-original-title:major_essential_width, aria-valuenow:major_essential_valuenow"  v-style="width:major_essential_width"></div>
+                </div>
+                전공선택 <span class="num">{{major_selection_valuenow}}%</span>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-danger progress-bar-striped" id="major-selection-graph" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="right" v-attr="data-original-title:major_selection_width, aria-valuenow:major_selection_valuenow"  v-style="width:major_selection_width"></div>
+                </div>
+                총 학점 <span class="num">{{total_value}}%</span>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success progress-bar-striped" id="total-culture-essential-graph" role="progressbar" aria-valuemin="0" aria-valuemax="25" data-toggle="tooltip" data-placement="bottom" v-attr="data-original-title:total_culture_essential_width, aria-valuenow:total_culture_essential_valuenow"  v-style="width:total_culture_essential_width"></div>
+                  <div class="progress-bar progress-bar-info progress-bar-striped" id="total-culture-selection-graph" role="progressbar" aria-valuemin="0" aria-valuemax="25" data-toggle="tooltip" data-placement="bottom" v-attr="data-original-title:total_culture_selection_width, aria-valuenow:total_culture_selection_valuenow"  v-style="width:total_culture_selection_width"></div>
+                  <div class="progress-bar progress-bar-warning progress-bar-striped" id="total-major-essential-graph" role="progressbar" aria-valuemin="0" aria-valuemax="25" data-toggle="tooltip" data-placement="bottom" v-attr="data-original-title:total_major_essential_width, aria-valuenow:total_major_essential_valuenow"  v-style="width:total_major_essential_width"></div>
+                  <div class="progress-bar progress-bar-danger progress-bar-striped" id="total-major-selection-graph" role="progressbar" aria-valuemin="0" aria-valuemax="25" data-toggle="tooltip" data-placement="bottom" v-attr="data-original-title:total_major_selection_width, aria-valuenow:total_major_selection_valuenow"  v-style="width:total_major_selection_width"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grade_item">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="panel panel-success" id="culture_essential_grade">
+                  <div class="panel-heading">
+                    {{title}}
+                  </div>
+                  <div class="panel-body">
+                    <ul class="left">
+                      <li>요구학점</li>
+                      <li>현재학점</li>
+                      <li>필요학점</li>
+                    </ul>
+                    <ul class="right">
+                      <li><span v-text="desireGrade"></span></li>
+                      <li><span v-text="currentGrade"></span></li>
+                      <li><span v-text="needGrade"></span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="panel panel-info" id="culture_selection_grade">
+                  <div class="panel-heading">
+                    교양선택
+                  </div>
+                  <div class="panel-body">
+                    <ul class="left">
+                      <li>요구학점</li>
+                      <li>현재학점</li>
+                      <li>필요학점</li>
+                    </ul>
+                    <ul class="right">
+                      <li><span v-text="desireGrade"></span></li>
+                      <li><span v-text="currentGrade"></span></li>
+                      <li><span v-text="needGrade"></span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="panel panel-warning" id="major_essential_grade">
+                  <div class="panel-heading">
+                    전공필수
+                  </div>
+                  <div class="panel-body">
+                    <ul class="left">
+                      <li>요구학점</li>
+                      <li>현재학점</li>
+                      <li>필요학점</li>
+                    </ul>
+                    <ul class="right">
+                      <li><span v-text="desireGrade"></span></li>
+                      <li><span v-text="currentGrade"></span></li>
+                      <li><span v-text="needGrade"></span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="panel panel-danger" id="major_selection_grade">
+                  <div class="panel-heading">
+                    전공선택
+                  </div>
+                  <div class="panel-body">
+                    <ul class="left">
+                      <li>요구학점</li>
+                      <li>현재학점</li>
+                      <li>필요학점</li>
+                    </ul>
+                    <ul class="right">
+                      <li><span v-text="desireGrade"></span></li>
+                      <li><span v-text="currentGrade"></span></li>
+                      <li><span v-text="needGrade"></span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="panel panel-success" id="culture_essential_subject">
+                  <div class="panel-heading"> {{title}}
+                  </div>
+                  <ul class="list-group">
+                    <li class="list-group-item" v-repeat="items">
+                      <div class="input-group">
+                        <input type="text" v-model="subjectName" class="form-control" placeholder="과목명" readonly>
+                        <input type="number" v-model="subjectGrade" v-on="keypress:allGradeSum,
+                                                                          keyup:allGradeSum,
+                                                                          keydown:allGradeSum" placeholder="학점" class="form-control" readonly>&nbsp;
+                        <input type="checkbox" v-model="subjectCheck" v-on="click:allGradeSum" disabled>&nbsp;
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="panel-body"><h5>합계 : <span v-model="subjectAmount">{{subjectAmount}}</span>점</h5></div>
+                </div>
+
+                <div class="panel panel-info" id="culture_selection_subject">
+                  <div class="panel-heading"> {{title}}
+                  </div>
+                  <ul class="list-group">
+                    <li class="list-group-item" v-repeat="items">
+                      <div class="input-group">
+                        <input type="text" v-model="subjectName" class="form-control" placeholder="과목명" readonly>
+                        <input type="number" v-model="subjectGrade" v-on="keypress:allGradeSum,
+                                                                          keyup:allGradeSum,
+                                                                          keydown:allGradeSum" placeholder="학점" class="form-control" readonly>&nbsp;
+                        <input type="checkbox" v-model="subjectCheck" v-on="click:allGradeSum" disabled>&nbsp;
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="panel-body"><h5>합계 : <span v-model="subjectAmount">{{subjectAmount}}</span>점</h5></div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="panel panel-warning" id="major_essential_subject">
+                  <div class="panel-heading"> {{title}}
+                  </div>
+                  <ul class="list-group">
+                    <li class="list-group-item" v-repeat="items">
+                      <div class="input-group">
+                        <input type="text" v-model="subjectName" class="form-control" placeholder="과목명" readonly>
+                        <input type="number" v-model="subjectGrade" v-on="keypress:allGradeSum,
+                                                                          keyup:allGradeSum,
+                                                                          keydown:allGradeSum" placeholder="학점" class="form-control" readonly>&nbsp;
+                        <input type="checkbox" v-model="subjectCheck" v-on="click:allGradeSum" disabled>&nbsp;
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="panel-body"><h5>합계 : <span v-model="subjectAmount">{{subjectAmount}}</span>점</h5></div>
+                </div>
+                <div class="panel panel-danger" id="major_selection_subject">
+                  <div class="panel-heading"> {{title}}
+                  </div>
+                  <ul class="list-group">
+                    <li class="list-group-item" v-repeat="items">
+                      <div class="input-group">
+                        <input type="text" v-model="subjectName" class="form-control" placeholder="과목명" readonly>
+                        <input type="number" v-model="subjectGrade" v-on="keypress:allGradeSum,
+                                                                          keyup:allGradeSum,
+                                                                          keydown:allGradeSum" placeholder="학점" class="form-control" readonly>&nbsp;
+                        <input type="checkbox" v-model="subjectCheck" v-on="click:allGradeSum" disabled>&nbsp;
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="panel-body"><h5>합계 : <span v-model="subjectAmount">{{subjectAmount}}</span>점</h5></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="timetable">
+        <table class="table table-bordered tablehead">
+          <tbody>
+            <tr>
+              <th></th>
+              <td v-repeat="head">{{day}}
+                <div class="grids">
+                  <div class="grid" v-repeat="grid" v-style="top:top, height:height">
+                    <div class="subject" v-attr="data-start:start, data-end:end" v-style="background-color:color">
+                      <h3>{{subject}}</h3>
+                      <p>
+                        <em>{{professor}}</em>
+                        <span>{{description}}</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="table table-bordered tablebody">
+          <tbody>
+            <div class="column"></div>
+            <tr v-repeat="class">
+              <th>{{time}}</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+    <!-- Content End-->
+    <!-- js load -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="//www.parsecdn.com/js/parse-1.3.4.min.js"></script>
+    <script src="http://vuejs.org/js/vue.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/snap.svg/0.3.0/snap.svg-min.js"></script>
+    <script src="/javascripts/pnotify.custom.js"></script>
+    <script src="/javascripts/nav.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.transit/0.9.12/jquery.transit.min.js"></script>
+    <script src="http://sugarjs.com/release/current/sugar.min.js"></script>
+    <script src="/javascripts/friend.js"></script>
+    <!-- End -->
+    <script>
+      nav.menus[1].active = 'active';
+      var username;
+      <% var username; if (username) { %>
+        username = '<%= username %>'; // URL에서 /@username 을 받으면 변수에 'username'을 정의한다.
+      <% } %>
+        var aside;
+      if(username){ // @ URL로 접근했을시
+        var query = new Parse.Query(Parse.User);
+        query.equalTo("username", username);
+        query.first({
+          success: function(object) { 
+            if(object) { // 아이디가 유효하면
+              $('.myfriend').css('display', 'none');
+              $('.addfriend').css('display', 'none');
+              aside = new Vue({
+                el: '#aside',
+                data: {
+                  aside_title : '',
+                  lists : [{
+                    name: '학점',
+                    current: 'current',
+                    classname: '.grade'
+                  }],
+                  friendCount : 0,
+                  title_display: 'none',
+                  profile_title_display: 'block',
+                  information_item_display: 'block',
+                  information_link_href: '/@' + username,
+                  information_count_display: 'none',
+                  picture: '',
+                  nickname: object.get('nickname'),
+                  university: object.get('university'),
+                  year: object.get('year').slice(2, -1)
+                },
+                ready: function(){
+                  $('.timetable').css('display', 'none');
+                  for(i=0; i<this.lists.length; i++){
+                    if(this.lists[i].current == 'x') $(this.lists[i].classname).css('display', 'none');
+                  }
+                },
+                methods: {
+                  select: function select(index){
+                    for(i=0; i<aside.lists.length; i++){
+                      $(aside.lists[i].classname).css('display', 'none');
+                      aside.lists[i].current = 'x';
+                    }
+                    if(aside.lists[index].current !== 'current' && aside.lists[index].classname == '.timetable'){ // 다른 시간표를 선택했을경우에만
+                      var myTimetable = Parse.Object.extend("myTimetable");
+                      var query = new Parse.Query(myTimetable);
+                      query.equalTo("userName", username);
+                      query.find({
+                        success: function(object) {
+                          for(i=0;i<object.length;i++){
+                            if(object[i].id == aside.lists[index].objectId){ // 인덱스의 objectId와 일치하면
+                              // 설정을 불러온다.
+                              aside.aside_title = object[i].get('title');
+                              var timetable = object[i].get('timetable');
+                              for(j=0;j<tablehead.head.length;j++){ 
+                                tablehead.head[j].grid = []; // 그 요일의 정보를 초기화하고
+                                tablehead.head[j].grid = timetable[j].grid; // 해당 요일의 수업을 불러온다.
+                              }
+                            }
+                          }
+                        }
+                      });
+                    }
+                    aside.lists[index].current = 'current';
+                    if(aside.lists[index].classname == '.grade'){
+                      $('.content').css({
+                        "margin": "20px",
+                        "width": "auto"
+                      });
+                    } else if(aside.lists[index].classname == '.timetable'){
+                      $('.content').css({
+                        "margin": "0px",
+                        "width": "1090px"
+                      });
+                    }
+                    $(aside.lists[index].classname).css('display', 'block');
+                  }
+                }
+              });
+              aside.picture = (object.get('image')) ? object.get('image').url() : '/images/0.jpg';
+              load(username);
+            } else { // 아이디가 없으면
+              alert('존재하지 않는 아이디입니다.');
+              location.href = '/home';
+            }
+          }
+        });
+      } else {
+        // 네비의 친구메뉴로 접근했을시
+        $('.addfriend').css('display', 'none');
+        $('.grade').css('display', 'none');
+        $('.timetable').css('display', 'none');
+        aside = new Vue({
+          el: '#aside',
+          data: {
+            aside_title : '친구',
+            lists : [{
+              name: '내 친구',
+              current: 'current',
+              classname: '.myfriend'
+            },
+            {
+              name: '친구 요청',
+              current: 'x',
+              classname: '.addfriend'
+            }],
+            friendCount : 0,
+            title_display: 'block',
+            profile_title_display: 'none',
+            information_item_display: 'none',
+            information_link_href: '/',
+            information_count_display: 'block',
+            picture: '',
+            nickname: '',
+            university: '',
+            year: ''
+          },
+          methods: {
+            select: function select(index){
+              for(i=0; i<aside.lists.length; i++){
+                $(aside.lists[i].classname).css('display', 'none');
+                aside.lists[i].current = 'x';
+              }
+              aside.lists[index].current = 'current';
+              $(aside.lists[index].classname).css('display', 'block');
+            }
+          },
+          ready: function(){
+            friendsLoad();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

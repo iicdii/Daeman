@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>대학만렙</title>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/grade.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/nav.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/pnotify.custom.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="modal fade" id="gradeSetting" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">학점 설정</h4>
+          </div>
+          <div class="modal-body">
+            <p><input type="radio" name="public" v-model="public" value="public"> 전체공개 <input type="radio" name="public" v-model="public" value="friend"> 친구공개</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="gradeSettingSave" class="btn btn-info">저장</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!-- Menu -->
+    <% include nav %>
+    <!-- Menu End-->
+    <!-- Aside -->
+    <aside id="aside">
+      <div class="title">
+        <h2>{{aside_title}}
+          <ul class="buttons">
+            <li data-toggle="tooltip" title="설정"><button type="button" class="btn btn-xs btn-info" data-toggle="modal" data-target="#gradeSetting"><span class="glyphicon glyphicon-cog"></span></button></li>
+          </ul>
+        </h2>
+      </div>
+      <ol class="list">
+        <li v-repeat="lists" v-class="current"><a v-on="click:select($index)" v-attr="href:href">{{name}}</a></li>
+      </ol>
+    </aside>
+    <!-- Aside End-->
+    <!-- Content -->
+    <div class="content">
+      <div class="main">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="panel panel-success" id="culture_essential_grade">
+              <div class="panel-heading">
+                {{title}}
+              </div>
+              <div class="panel-body">
+                 <ul class="left">
+                  <li class="withinput">요구학점</li>
+                  <li>현재학점</li>
+                  <li>필요학점</li>
+                </ul>
+                <ul class="right">
+                  <li class="withinput"><input type="text" v-model="desireGrade" v-on="keypress:allGradeSum,
+                                                                 keyup:allGradeSum,
+                                                                 keydown:allGradeSum" class="form-control"></li>
+                  <li><span v-text="currentGrade"></span></li>
+                  <li><span v-text="needGrade"></span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="panel panel-info" id="culture_selection_grade">
+              <div class="panel-heading">
+                교양선택
+              </div>
+              <div class="panel-body">
+                <ul class="left">
+                  <li class="withinput">요구학점</li>
+                  <li>현재학점</li>
+                  <li>필요학점</li>
+                </ul>
+                <ul class="right">
+                  <li class="withinput"><input type="text" v-model="desireGrade" v-on="keypress:allGradeSum,
+                                                                 keyup:allGradeSum,
+                                                                 keydown:allGradeSum" class="form-control"></li>
+                  <li><span v-text="currentGrade"></span></li>
+                  <li><span v-text="needGrade"></span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="panel panel-warning" id="major_essential_grade">
+              <div class="panel-heading">
+                전공필수
+              </div>
+              <div class="panel-body">
+                <ul class="left">
+                  <li class="withinput">요구학점</li>
+                  <li>현재학점</li>
+                  <li>필요학점</li>
+                </ul>
+                <ul class="right">
+                  <li class="withinput"><input type="text" v-model="desireGrade" v-on="keypress:allGradeSum,
+                                                                 keyup:allGradeSum,
+                                                                 keydown:allGradeSum" class="form-control"></li>
+                  <li><span v-text="currentGrade"></span></li>
+                  <li><span v-text="needGrade"></span></li>
+                </ul>
+            </div>
+          </div>
+        </div>
+
+          <div class="col-md-3">
+            <div class="panel panel-danger" id="major_selection_grade">
+              <div class="panel-heading">
+                전공선택
+              </div>
+              <div class="panel-body">
+                <ul class="left">
+                  <li class="withinput">요구학점</li>
+                  <li>현재학점</li>
+                  <li>필요학점</li>
+                </ul>
+                <ul class="right">
+                  <li class="withinput"><input type="text" v-model="desireGrade" v-on="keypress:allGradeSum,
+                                                                 keyup:allGradeSum,
+                                                                 keydown:allGradeSum" class="form-control"></li>
+                  <li><span v-text="currentGrade"></span></li>
+                  <li><span v-text="needGrade"></span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="panel panel-success" id="culture_essential_subject">
+              <div class="panel-heading"> {{title}}
+                <button type="button" v-on="click:addSubject" data-toggle="tooltip" title="새 과목" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+                <button type="button" v-on="click:subjectCheckAll" data-toggle="tooltip" title="모두 체크하기" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-ok"></span></button>
+              </div>
+              <ul class="list-group">
+                <li class="list-group-item" v-repeat="items">
+                  <div class="input-group">
+                    <input type="text" v-model="subjectName" class="form-control" placeholder="과목명">
+                    <input type="number" v-model="subjectGrade" v-on="keypress:allGradeSum,
+                                                                      keyup:allGradeSum,
+                                                                      keydown:allGradeSum" placeholder="학점" class="form-control">&nbsp;
+                    <input type="checkbox" v-model="subjectCheck" v-on="click:allGradeSum">&nbsp;
+                    <button type="button" v-if="$index != 0" v-on="click:remove($index)" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-minus"></span></button>
+                  </div>
+                </li>
+              </ul>
+              <div class="panel-body"><h5>합계 : <span v-model="subjectAmount">{{subjectAmount}}</span>점</h5></div>
+            </div>
+
+            <div class="panel panel-info" id="culture_selection_subject">
+              <div class="panel-heading"> {{title}}
+                <button type="button" v-on="click:addSubject" data-toggle="tooltip" title="새 과목" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+                <button type="button" v-on="click:subjectCheckAll" data-toggle="tooltip" title="모두 체크하기" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-ok"></span></button>
+              </div>
+              <ul class="list-group">
+                <li class="list-group-item" v-repeat="items">
+                  <div class="input-group">
+                    <input type="text" v-model="subjectName" class="form-control" placeholder="과목명">
+                    <input type="number" v-model="subjectGrade" v-on="keypress:allGradeSum,
+                                                                      keyup:allGradeSum,
+                                                                      keydown:allGradeSum" placeholder="학점" class="form-control">&nbsp;
+                    <input type="checkbox" v-model="subjectCheck" v-on="click:allGradeSum">&nbsp;
+                    <button type="button" v-if="$index != 0" v-on="click:remove($index)" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-minus"></span></button>
+                  </div>
+                </li>
+              </ul>
+              <div class="panel-body"><h5>합계 : <span v-model="subjectAmount">{{subjectAmount}}</span>점</h5></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="panel panel-warning" id="major_essential_subject">
+              <div class="panel-heading"> {{title}}
+                <button type="button" v-on="click:addSubject" data-toggle="tooltip" title="새 과목" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+                <button type="button" v-on="click:subjectCheckAll" data-toggle="tooltip" title="모두 체크하기" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-ok"></span></button>
+              </div>
+              <ul class="list-group">
+                <li class="list-group-item" v-repeat="items">
+                  <div class="input-group">
+                    <input type="text" v-model="subjectName" class="form-control" placeholder="과목명">
+                    <input type="number" v-model="subjectGrade" v-on="keypress:allGradeSum,
+                                                                      keyup:allGradeSum,
+                                                                      keydown:allGradeSum" placeholder="학점" class="form-control">&nbsp;
+                    <input type="checkbox" v-model="subjectCheck" v-on="click:allGradeSum">&nbsp;
+                    <button type="button" v-if="$index != 0" v-on="click:remove($index)" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-minus"></span></button>
+                  </div>
+                </li>
+              </ul>
+              <div class="panel-body"><h5>합계 : <span v-model="subjectAmount">{{subjectAmount}}</span>점</h5></div>
+            </div>
+            <div class="panel panel-danger" id="major_selection_subject">
+              <div class="panel-heading"> {{title}}
+                <button type="button" v-on="click:addSubject" data-toggle="tooltip" title="새 과목" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+                <button type="button" v-on="click:subjectCheckAll" data-toggle="tooltip" title="모두 체크하기" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-ok"></span></button>
+              </div>
+              <ul class="list-group">
+                <li class="list-group-item" v-repeat="items">
+                  <div class="input-group">
+                    <input type="text" v-model="subjectName" class="form-control" placeholder="과목명">
+                    <input type="number" v-model="subjectGrade" v-on="keypress:allGradeSum,
+                                                                      keyup:allGradeSum,
+                                                                      keydown:allGradeSum" placeholder="학점" class="form-control">&nbsp;
+                    <input type="checkbox" v-model="subjectCheck" v-on="click:allGradeSum">&nbsp;
+                    <button type="button" v-if="$index != 0" v-on="click:remove($index)" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-minus"></span></button>
+                  </div>
+                </li>
+              </ul>
+              <div class="panel-body"><h5>합계 : <span v-model="subjectAmount">{{subjectAmount}}</span>점</h5></div>
+            </div>
+          </div>
+        </div>
+        <div id="total_view">
+          <h3>합계</h3>
+          <h5>요구학점 : <span v-text="total_desire"></span>점 / 
+            현재학점 : <span v-text="total_current"></span>점 / 
+            필요학점 : <span v-text="total_need"></span>점</h5>
+          <button type="button" id="savebutton" class="btn btn-success" onclick="doSave();">저장</button>
+        </div>
+      </div>
+    </div>
+    <!-- Content End-->
+    <!-- js load -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="//www.parsecdn.com/js/parse-1.3.4.min.js"></script>
+    <script src="http://vuejs.org/js/vue.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/snap.svg/0.3.0/snap.svg-min.js"></script>
+    <script src="http://sugarjs.com/release/current/sugar.min.js"></script>
+    <script src="/javascripts/pnotify.custom.js"></script>
+    <script src="/javascripts/nav.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.transit/0.9.12/jquery.transit.min.js"></script>
+    <script src="/javascripts/grade.js"></script>
+    <script src="/javascripts/grade_save.js"></script>
+    <script src="/javascripts/grade_load.js"></script>
+    <!-- End -->
+    <script>
+      nav.menus[3].active = 'active';
+    </script>
+  </body>
+</html>

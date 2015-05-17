@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>대학만렙</title>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/setting.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/nav.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/pnotify.custom.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <!-- Menu -->
+    <% include nav %>
+    <!-- Menu End-->
+    <!-- Aside -->
+    <aside id="aside">
+      <div class="title"><h2>{{aside_title}}</h2></div>
+      <ol class="list">
+        <li v-repeat="lists" v-class="current"><a v-on="click:select($index)">{{name}}</a></li>
+      </ol>
+    </aside>
+    <!-- Aside End-->
+    <!-- Content -->
+    <div class="content">
+      <div class="main">
+        <div class="setting">
+          <div class="profile">
+            <h2>내 정보</h2>
+            <p>
+              <label>사진</label>
+              <img v-attr="src:picture">
+            </p>
+            <p>
+              <label>아이디</label>
+              <em>{{id}}</em>
+            </p>
+            <p>
+              <label>이름</label>
+              <em>{{nickname}}</em>
+            </p>
+            <p>
+              <label>학교</label>
+              <em>{{university}}</em>
+            </p>
+            <p>
+              <label>입학연도</label>
+              <em>{{year}}</em>
+            </p>
+          </div>
+          <div class="setpicture">
+            <h2>사진 변경</h2>
+            <p>
+              <label>현재 사진</label>
+              <img v-attr="src:picture">
+            </p>
+            <p>
+              <label>파일첨부</label>
+              <input type="file" id="uploadpicture" class="file">
+              <span class="description">GIF, JPG, PNG 파일</span>
+            </p>
+            <p align="right">
+              <button class="btn btn-info" id="delete">삭제</button>
+              <button class="btn btn-info" id="change">변경</button>
+            </p>
+          </div>
+          <div class="setAlarm">
+            <h2>알림 설정</h2>
+            <p>
+              <label>코멘트 알림</label>
+              <input type="checkbox" v-model="commentAlarm"> 알림
+            </p>
+            <p>
+              <label>좋아요 알림</label>
+              <input type="checkbox" v-model="likeAlarm"> 알림
+            </p>
+            <p align="right">
+              <button class="btn btn-info" v-on="click:save">변경</button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Content End-->
+    <!-- js load -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="//www.parsecdn.com/js/parse-1.3.4.min.js"></script>
+    <script src="http://vuejs.org/js/vue.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/snap.svg/0.3.0/snap.svg-min.js"></script>
+    <script src="/javascripts/pnotify.custom.js"></script>
+    <script src="/javascripts/nav.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.transit/0.9.12/jquery.transit.min.js"></script>
+    <script src="http://sugarjs.com/release/current/sugar.min.js"></script>
+    <script src="/javascripts/setting.js"></script>
+    <!-- End -->
+    <script>
+    </script>
+  </body>
+</html>

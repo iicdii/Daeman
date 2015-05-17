@@ -1,0 +1,344 @@
+body {
+  background-color: #b5afaf;
+}
+ul {
+  list-style-type: none;
+}
+a:hover{
+  text-decoration: none;
+}
+em {
+  font-style: normal;
+  font-weight: bold;
+}
+
+aside{
+  position: fixed;
+  border: 1px solid #cec4c2;
+  border-width: 0 1px 0 0;
+  z-index: 0;
+  top: 80px;
+  width: 350px;
+  height: 100%;
+  overflow: auto;
+  background-color: #fff;
+}
+aside div.title {
+  margin: 20px;
+  line-height: 30px;
+  overflow: hidden;
+}
+aside div.title h2{
+  color: #4ca2f7;
+  font-size: 18px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+aside div.profile_title {
+  margin: 0;
+  padding: 15px;
+  height: 80px;
+  line-height: 30px;
+  overflow: hidden;
+}
+aside div.profile_title img.picture {
+  float: left;
+  margin-right: 15px;
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+}
+aside div.profile_title h2{
+  margin: 5px 0;
+  height: 20px;
+  line-height: 18px;
+  color: #4ca2f7;
+  font-size: 18px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+aside div.profile_title p {
+  float: left;
+  height: 15px;
+  line-height: 11px;
+  color: #999;
+  font-size: 11px;
+}
+
+aside div.information {
+  margin: 25px;
+  margin-top: 0;
+}
+aside div.information p {
+  line-height: 15px;
+  color: #333;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+aside div.information .friendCount{
+  font-weight: bold;
+}
+aside div.information ul{
+  padding: 0;
+  height: 30px;
+}
+aside div.information ul li {
+  float: left;
+  margin-right: 10px;
+  height: 15px;
+  color: #999;
+  font-size: 11px;
+  clear: both !important;
+}
+
+aside ol.list {
+  border-top: 1px solid #ede4e2;
+  padding: 0;
+}
+
+aside ol.list li a{
+  display: block;
+  padding: 0 25px;
+  border-bottom: 1px solid #ede4e2;
+  border-width: 1px 0;
+  height: 39px;
+  line-height: 39px;
+  color: #bda9a6;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #fbf9f9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+aside ol.list li a:hover {
+	color: #333;
+  background-color: #ede4e2;
+}
+
+aside ol.list li.current a{
+  border-left: 3px solid #4ca2f7;
+  display: block;
+  padding: 0 25px;
+  border-bottom: 1px solid #ede4e2;
+  height: 39px;
+  line-height: 39px;
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.content{
+  position: absolute;
+  margin: 20px;
+  left: 350px;
+  top: 80px;
+}
+.content div.main{
+  display: block;
+  width: 100%;
+}
+
+/* 내 친구 */
+.content div.main div.myfriend div.board {
+  display: block;
+  width: 800px;
+  margin-bottom: 5px;
+  border: 1px solid #c5ced0;
+  background-color: #fff;
+}
+.content div.main div.myfriend div.board article {
+  padding: 10px;
+  height: 84px;
+}
+.content div.main div.myfriend div.board article img{
+  float: left;
+  max-width:64px; 
+  width: expression(this.width > 64 ? 64: true); 
+  height: auto;
+}
+.content div.main div.myfriend div.board article a h2{
+  float: right;
+  clear: right;
+  width: 698px;
+  color: #4ca2f7;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 2px 0 0 0;
+}
+
+.content div.main div.myfriend div.board article p {
+  float: left;
+  height: 15px;
+  line-height: 11px;
+  color: #999;
+  font-size: 11px;
+  margin: 5px 0 0 17px;
+}
+
+.content div.main div.myfriend div.board article ul.buttons{
+  position: absolute;
+  right: 10px;
+  margin: 0;
+}
+
+.content div.main div.myfriend div.board article ul.buttons li {
+  display: inline-block;
+}
+
+/* 친구 요청 */
+.content div.main div.addfriend .input-group input[type="text"] {
+  
+}
+
+/* 학점 */
+.content div.main div.grade div.graph {
+  width: 100%;
+}
+.content div.main div.grade div.graph div.panel div.panel-body .num {
+  color: #999;
+  font-size: 11px;
+}
+.content div.main div.grade div.grade_item .panel .list-group{
+  padding: 10px;
+  max-height: 340px;
+  overflow-y: scroll;
+}
+.content div.main div.grade div.grade_item .panel-body {
+  padding: 0px 8px;
+}
+.content div.main div.grade div.grade_item .panel-body ul{
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+}
+.content div.main div.grade div.grade_item .panel-body .left {
+  position: relative;
+  float: left;
+}
+.content div.main div.grade div.grade_item .panel-body .right {
+  position: relative;
+  float: left;
+}
+.content div.main div.grade div.grade_item .panel-body .left li {
+  width: 60px;
+  padding: 10px 5px;
+}
+.content div.main div.grade div.grade_item .panel-body .left .withinput {
+  padding: 20px 5px;
+}
+.content div.main div.grade div.grade_item .panel-body .right li {
+  width: 60px;
+  padding: 10px 5px;
+}
+.content div.main div.grade div.grade_item .panel-body .right .withinput {
+  margin-top: 2px;
+  margin-bottom: 1px;
+}
+.content div.main div.grade .input-group{
+  width: 100%;
+}
+.content div.main div.grade .input-group input[type="text"]{
+  width: 62%;
+}
+.content div.main div.grade .input-group input[type="number"]{
+  width: 23%;
+}
+
+/* 시간표 */
+.content div.main div.timetable .table{
+  margin: 0;
+}
+.content div.main div.timetable .tablehead, .content .tablebody{
+  width: 100%;
+}
+.content div.main div.timetable .tablehead{
+  background-color: #e7eaeb;
+}
+.content div.main div.timetable .tablebody{
+  background-color: #f9fbfb;
+}
+.content div.main div.timetable .tablehead tr th, .content .tablehead tr td {
+  border-width: 1px;
+  border-style: solid;
+  border-color: #c5ced0;
+  color: #999;
+  font-weight: normal;
+  text-align: center;
+}
+.content div.main div.timetable .tablehead div.grids{
+  position: absolute;
+  width: 195px;
+  height: 100%;
+  top: 0;
+}
+.content div.main div.timetable .tablehead div.grid{
+  position: absolute;
+  width: 100%;
+  font-size: 12px;
+}
+
+.content div.main div.timetable .table th {
+  width: 107px;
+  color: #999;
+  font-weight: normal;
+  text-align: center;
+}
+.content div.main div.timetable .table td {
+  width: 196px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.content div.main div.timetable .tablebody tr th {
+  height: 39px;
+  line-height: 39px;
+}
+.content div.main div.timetable .tablebody tr td {
+  padding: 0;
+}
+.content div.main div.timetable .tablebody tr td p {
+  margin: 0 10px 10px 10px;
+}
+.content div.main div.timetable .tablehead tr td div.grids div.grid div.subject {
+  position: relative; 
+  text-align: left;
+  z-index: 10;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.content div.main div.timetable .tablehead tr td div.grids div.grid div.subject h3 {
+  margin: 10px 10px 0 10px;
+  font-size: 14px;
+  color: #000;
+  font-weight: bold;
+}
+.content div.main div.timetable .tablehead tr td div.grids div.grid div.subject p {
+  margin: 0px 10px 10px 10px;
+}
+.content div.main div.timetable .tablehead tr td div.grids div.grid div.subject p span {
+  font-size: 12px;
+  color: #666;
+}
+.content div.main div.timetable .tablehead tr td div.grids div.grid div.subject p em {
+  font-size: 12px;
+  color: #666;
+  font-weight: bold;
+}
+
+#svg{
+  width: 54px;
+  height: 54px;
+}

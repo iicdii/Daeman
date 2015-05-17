@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>대학만렙</title>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/board.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/nav.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/pnotify.custom.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <!-- Menu -->
+    <% include nav %>
+    <!-- Menu End-->
+    <!-- Aside -->
+    <aside id="aside">
+      <div class="title"><h2>{{aside_title}}</h2></div>
+      <ol class="list">
+        <li><a href="/board/1">공지사항</a></li>
+        <li><a href="/board/2">자유게시판</a></li>
+      </ol>
+    </aside>
+    <!-- Aside End-->
+    <!-- Content -->
+    <div class="content">
+      <div class="main">
+        <div class="input-group writebox" v-show="writebox">
+          <textarea class="form-control" v-model="writeText" rows="2" placeholder="글을 입력해 주세요." autofocus></textarea>
+          <span class="input-group-addon btn btn-primary" v-on="click:writePost"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></span>
+        </div>
+        <div class="boards">
+        <a class="board" v-attr="href:link" v-repeat="board">
+          <span v-attr="class:icon" aria-hidden="true"></span>
+          <h2>{{name}}</h2>
+          <article>
+            <img v-attr="src:picture" class="picture">
+            <p>{{text}}</p>
+            <ul class="status">
+              <li v-class="likeClass, active: isLikeActive"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> {{likeCount}}</li>
+              <li v-class="commentClass, active: isCommentActive"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> {{commentCount}}</li>
+            </ul>
+          </article>
+        </a>
+        </div>
+        <div class="articles">
+          <article v-repeat="posts">
+            <img v-attr="src:picture" class="picture">
+            <h3>{{nickname}}</h3>
+            <p>{{text}}</p>
+            <time class="timeago">{{time}}</time>
+            <ul class="status">
+              <li class="delete" v-show="delete" v-on="click:deletePost(this)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></li>
+              <li v-class="likeClass, active: isLikeActive"  v-on="click:like($index)"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> {{likeCount}}</li>
+              <li v-class="commentClass, active: isCommentActive" v-on="click:showComment($index)"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> {{commentCount}}</li>
+            </ul>
+            <div class="comments" v-show="visibleComments">
+              <article class="comment" v-repeat="comments">
+                <img v-attr="src:picture" class="picture">
+                <h4>{{nickname}}</h4>
+                <p>{{text}}</p>
+                <time class="timeago">{{time}}</time>
+                <ul class="status">
+                  <li class="delete" v-show="delete" v-on="click:deleteComment(this)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></li>
+                </ul>
+              </article>
+              <div class="input-group writebox" v-show="writebox">
+                <textarea class="form-control" v-model="writeText" rows="1" placeholder="댓글을 남겨 보세요." autofocus></textarea>
+                <span class="input-group-addon btn btn-primary" v-on="click:writeComment($index)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+    <!-- Content End-->
+    <!-- js load -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="//www.parsecdn.com/js/parse-1.3.4.min.js"></script>
+    <script src="http://vuejs.org/js/vue.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/snap.svg/0.3.0/snap.svg-min.js"></script>
+    <script src="/javascripts/pnotify.custom.js"></script>
+    <script src="/javascripts/nav.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.transit/0.9.12/jquery.transit.min.js"></script>
+    <script src="http://sugarjs.com/release/current/sugar.min.js"></script>
+    <script src="/javascripts/jquery.timeago.js"></script>
+    <script src="/javascripts/jquery.timeago.ko.js"></script>
+    <script src="/javascripts/board.js"></script>
+    <!-- End -->
+    <script>
+      <% var boardId;
+         var p; 
+         var c; %>
+      nav.menus[2].active = 'active';
+      var boardId;
+      var p;
+      var c;
+      var main;
+      boardId = <%= (boardId) ? boardId : 0 %>; // URL에서 /boardId 을 받았으면 변수에 정의한다.
+      p = "<%= (p) ? p : 0 %>"; // URL에서 ?p 를 받았으면 변수에 정의한다.
+      c = "<%= (c) ? c : 0 %>"; // URL에서 ?c 를 받았으면 변수에 정의한다.
+      if(boardId){ // URL에서 boardId를 받았으면
+        var Post = Parse.Object.extend("Post");
+        var Comment = Parse.Object.extend("Comment");
+        var Boards = Parse.Object.extend("Boards");
+        var Notification = Parse.Object.extend("Notification");
+        // Boards 클래스에서 해당 게시판이 있는지 확인하고
+        var boardQuery = new Parse.Query(Boards);
+        boardQuery.equalTo("boardId", <%= (boardId) ? boardId : 0 %>);
+        boardQuery.first({
+          success: function(board){
+            console.log(board);
+            if(board){ // 해당 게시판이 있다면
+              // 먼저 Posts의 뷰 클래스를 만들어준다.
+              main = new Vue({
+                el: '.main',
+                data: {
+                  writebox: (currentUser.get('postWriteAuth') <= board.get('postWriteAuth') || currentUser.get('admin') == 1) ? true : false,
+                  writeText: '',
+                  posts: [],
+                  postWriteAuth: board.get('postWriteAuth'),
+                  commentWriteAuth: board.get('commentWriteAuth'),
+                  isReady: false
+                },
+                methods: {
+                  writePost: function(){
+                    if(currentUser.get('postWriteAuth') <= main.postWriteAuth){
+                      var object = new Post();
+                      object.set("userId", currentUser.id);
+                      object.set("nickname", currentUser.get('nickname'));
+                      object.set("text", this.writeText);
+                      var pictureURL = (currentUser.get('image')) ? currentUser.get('image').url() : '/images/0.jpg';
+                      object.set("pictureURL", pictureURL);
+                      object.set("boardId", <%= (boardId) ? boardId : 0 %>);
+                                 object.set("like", []);
+                      object.save();
+                      location.reload();
+                    } else {
+                      alert('글쓰기 권한이 없습니다.');
+                    }
+                  },
+                  writeComment: function(index){
+                    if(currentUser.get('commentWriteAuth') <= main.commentWriteAuth){
+                      var commentQuery = new Parse.Query(Post);
+                      commentQuery.equalTo("boardId", <%= (boardId) ? boardId : 0 %>);
+                      commentQuery.find({
+                      success: function(posts){
+                        if(posts){
+                          posts.each(function(post){
+                            // 해당 게시물과 오브젝트 ID가 같음을 확인했으면
+                            if(main.posts[index].objectId == post.id){
+                              var object = new Comment();
+                              object.set("userId", currentUser.id);
+                              object.set("nickname", currentUser.get('nickname'));
+                              object.set("text", main.posts[index].writeText);
+                              var pictureURL = (currentUser.get('image')) ? currentUser.get('image').url() : '/images/0.jpg';
+                              object.set("pictureURL", pictureURL);
+                              object.set("boardId", <%= (boardId) ? boardId : 0 %>);
+                              object.set("postId", post.id);
+                              object.save().then(function(response) {
+                                main.posts[index].comments.unshift({
+                                  objectId: response.id,
+                                  postId: post.id,
+                                  userId: currentUser.id,
+                                  nickname: currentUser.get('nickname'),
+                                  text : main.posts[index].writeText,
+                                  picture: pictureURL,
+                                  time: jQuery.timeago(new Date()),
+                                  delete: true
+                                });
+                                // 본인이 아닌 해당 게시물의 글쓴이의 댓글 알람이 켜져있으면 알려준다.
+                                if(post.get('userId') != currentUser.id){
+                                  var userQuery = new Parse.Query(Parse.User);
+                                  userQuery.equalTo("objectId", post.get('userId'));
+                                  userQuery.first({
+                                    success: function(user){
+                                      if(user){
+                                        var setting = user.get('setting');
+                                        if(setting.commentAlarm == true){
+                                          var newAlarm = new Notification();
+                                          newAlarm.set("userId", user.id);
+                                          newAlarm.save().then(function(alarm) {
+                                            var messageObject = {
+                                              title: '새 댓글',
+                                              text: '<p>' + currentUser.get('nickname') + '님이 회원님의 게시물에 댓글을 남겼습니다.</p>' + '<p><button class="btn btn-danger" onclick="readAlarm(' + '\'' + alarm.id + '\'' + ', ' + '\'' + '\/board\/' + <%= (boardId) ? boardId : 0 %> + '?p=' + post.id + '&c=' + response.id + '\'' + ')">보기</button> <button class="btn btn-warning" onclick="readAlarm(' + '\'' + alarm.id + '\'' + ', 0)">읽음</button></p>',
+                                              type: 'info',
+                                              delay: 3000,
+                                              styling: 'bootstrap3'
+                                            };
+                                            alarm.set("message", messageObject);
+                                            alarm.save();
+                                          });
+                                        }
+                                      }
+                                    }
+                                  });
+                                }
+                              });
+                            }
+                          });
+                        }
+                      }
+                    });
+                    } else {
+                      alert('댓글쓰기 권한이 없습니다.');
+                    }
+                  },
+                  like: function(index){
+                    var likeQuery = new Parse.Query(Post);
+                    likeQuery.equalTo("boardId", <%= (boardId) ? boardId : 0 %>);
+                    likeQuery.find({
+                      success: function(posts){
+                        if(posts){
+                          posts.each(function(post){
+                            // 해당 게시물과 오브젝트 ID가 같음을 확인했으면
+                            if(main.posts[index].objectId == post.id){
+                              var likeArray = post.get('like');
+                              // 좋아요 목록에 글쓴이 아이디가 없으면
+                              if(jQuery.inArray(currentUser.id, likeArray) == -1){
+                                main.posts[index].isLikeActive = true;
+                                main.posts[index].likeCount++;
+                                likeArray.push(currentUser.id);
+                                post.set("like", likeArray);
+                                post.save();
+                              } else {
+                                alert('이미 좋아요를 누르셨습니다.');
+                              }
+                            }
+                          });
+                        }
+                      }
+                    });
+                  },
+                  deletePost: function(thisPost){
+                    // 본인이거나 관리자이고 글을 삭제하는데 동의했으면
+                    if((thisPost.userId == currentUser.id || currentUser.get('admin') == 1) && confirm("정말 이 글을 삭제하시겠습니까?")){
+                    var deleteQuery = new Parse.Query(Post);
+                    deleteQuery.equalTo("boardId", <%= (boardId) ? boardId : 0 %>);
+                    deleteQuery.equalTo("objectId", thisPost.objectId);
+                    deleteQuery.first({
+                      success: function(post){
+                        if(post){
+                          // 그 게시물과 댓글들을 모두 삭제한다.
+                          var commentQuery = new Parse.Query(Comment);
+                          commentQuery.equalTo("boardId", <%= (boardId) ? boardId : 0 %>);
+                          commentQuery.equalTo("postId", thisPost.postId);
+                          commentQuery.find({
+                            success: function(comments){
+                              comments.each(function(comment){
+                                comment.destroy();
+                              });
+                            }
+                          });
+                          post.destroy();
+                          location.reload();
+                        }
+                      }
+                    });
+                    } else {
+                      return;
+                    }
+                  },
+                  deleteComment: function(thisComment){
+                    // 본인이거나 관리자이고 댓글을 삭제하는데 동의했으면
+                    if((thisComment.userId == currentUser.id || currentUser.get('admin') == 1) && confirm("댓글을 삭제하시겠습니까?")){
+                    var deleteQuery = new Parse.Query(Comment);
+                    deleteQuery.equalTo("boardId", <%= (boardId) ? boardId : 0 %>);
+                    deleteQuery.equalTo("postId", thisComment.postId);
+                    deleteQuery.equalTo("objectId", thisComment.objectId);
+                    deleteQuery.first({
+                      success: function(comment){
+                        if(comment){
+                          // 그 댓글을 삭제한다.
+                          comment.destroy();
+                          main.posts[thisComment.$parent.$index].comments.splice(thisComment.$index, 1);
+                          main.posts[thisComment.$parent.$index].commentCount = main.posts[thisComment.$parent.$index].comments.length;
+                        }
+                      }
+                    });
+                    } else {
+                      return;
+                    }
+                  },
+                  showComment: function(index){
+                    this.posts[index].visibleComments = (this.posts[index].visibleComments === false) ? true : false;
+                  }
+                },
+                  watch: {
+                    'posts' : function(newPosts, oldPosts){
+                      for(i=0; i<newPosts.length; i++){
+                        // 게시물중에 애니메이션이 true이면 애니메이션을 재생하고 false로 바꾼다.
+                        if(newPosts[i].animation == true){
+                          var element = $('.articles').children().eq(i);
+                          element.css({ border: "5px solid rgba(253, 253, 150, 0)"});
+                          element.transition({ 
+                            border: "5px solid rgba(253, 253, 150, 1)",
+                            duration: 1000,
+                            delay: 1000
+                          }).transition({ 
+                            border: "5px solid rgba(253, 253, 150, 0)",
+                            duration: 500,
+                            delay: 3000
+                          });
+                          newPosts[i].animation = false;
+                        }
+                        // 코멘트중에 애니메이션이 true이면 애니메이션을 재생하고 false로 바꾼다.
+                        for(j=0; j<newPosts[i].comments.length; j++){
+                          if(newPosts[i].comments[j].animation == true){
+                            console.log(j);
+                            var element = $('.articles').children().eq(i).children().last().children().eq(j);
+                            element.transition({ 
+                              backgroundColor: "rgba(253, 253, 150, 1)",
+                              duration: 1000,
+                              delay: 500
+                            }).transition({ 
+                              backgroundColor: "rgba(253, 253, 150, 0)",
+                              duration: 500,
+                              delay: 3000
+                            });
+                            newPosts[i].comments[j].animation = false;
+                          }
+                        }
+                      }
+                    },
+                  }
+              });
+              /* 게시물 불러오기 */
+              var allPosts = new Parse.Query(Post);
+              allPosts.equalTo("boardId", <%= (boardId) ? boardId : 0 %>);
+              // 특정 게시물 query를 받았으면 해당 게시물만 DB에서 찾고 아니면 내림차순으로 정렬한다.
+              allPosts.descending("createdAt");
+              ("<%= (p) ? p : 0 %>" !== "0") ? allPosts.equalTo("objectId", "<%= (p) ? p : 0 %>") : allPosts.descending("createdAt");
+              allPosts.find({
+                success: function(posts){
+                  // 해당 게시판에 게시물이 있다면
+                  if(posts){
+                    // 게시물을 불러온다.
+                    var postIndex;
+                    var commentIndex;
+                    posts.each(function(post){
+                      postIndex = main.posts.length;
+                      // 해당 게시물의 코멘트가 있는지 확인해주고 있으면 불러온다.
+                      var allComments = new Parse.Query(Comment);
+                      allComments.equalTo("boardId", <%= (boardId) ? boardId : 0 %>);
+                      allComments.equalTo("postId", post.id);
+                      // 날짜가 내림차순으로 정렬된 값을 찾는다.
+                      allComments.descending("createdAt");
+                      allComments.find({
+                        success: function(comments){
+                          if(comments){ // 코멘트가 있으면
+                            var commentArray = [];
+                            comments.each(function(comment){
+                              commentArray.push({
+                                objectId: comment.id,
+                                postId: comment.get('postId'),
+                                userId: comment.get('userId'),
+                                nickname: comment.get('nickname'),
+                                text : comment.get('text'),
+                                picture: comment.get('pictureURL'),
+                                time: jQuery.timeago(comment.createdAt),
+                                delete: (comment.get('userId') == currentUser.id || currentUser.get('admin') == 1) ? true : false,
+                                animation: ("<%= (p) ? p : 0 %>" !== "0" && "<%= (c) ? c : 0 %>" == comment.id) ? true : false
+                              });
+                            });
+                            main.posts.push({
+                              objectId: post.id,
+                              userId : post.get('userId'),
+                              nickname : post.get('nickname'),
+                              text : post.get('text'),
+                              picture: post.get('pictureURL'),
+                              time: jQuery.timeago(post.createdAt),
+                              likeClass : 'like',
+                              isLikeActive : (post.get('like').length > 0) ? true : false,
+                              likeCount : post.get('like').length,
+                              commentClass : 'comment',
+                              isCommentActive : (comments.length > 0) ? true : false,
+                              commentCount : comments.length,
+                              delete: (post.get('userId') == currentUser.id || currentUser.get('admin') == 1) ? true : false,
+                              visibleComments : ("<%= (c) ? c : 0 %>" !== "0") ? true : false,
+                              writebox: (currentUser.get('commentWriteAuth') <= main.commentWriteAuth || currentUser.get('admin') == 1) ? true : false,
+                              writeText: '',
+                              comments: commentArray,
+                              animation: ("<%= (p) ? p : 0 %>" !== "0" && "<%= (c) ? c : 0 %>" === "0") ? true : false
+                            });
+                          } else { // 코멘트가 없으면
+                            console.log('코멘트 없음');
+                            main.posts.push({
+                              objectId: post.id,
+                              userId : post.get('userId'),
+                              nickname : post.get('nickname'),
+                              text : post.get('text'),
+                              picture: post.get('pictureURL'),
+                              time: jQuery.timeago(post.createdAt),
+                              likeClass : 'like',
+                              isLikeActive : (post.get('like').length > 0) ? true : false,
+                              likeCount : post.get('like').length,
+                              commentClass : 'comment',
+                              isCommentActive : false,
+                              commentCount : 0,
+                              delete: (post.get('userId') == currentUser.id || currentUser.get('admin') == 1) ? true : false,
+                              visibleComments : ("<%= (c) ? c : 0 %>" !== "0") ? true : false,
+                              writebox: (currentUser.get('commentWriteAuth') <= main.commentWriteAuth || currentUser.get('admin') == 1) ? true : false,
+                              writeText: '',
+                              comments: [],
+                              animation: ("<%= (p) ? p : 0 %>" !== "0" && "<%= (c) ? c : 0 %>" === "0") ? true : false
+                            });
+                          }
+                        }
+                      });
+                    })
+                  }
+                }
+              });
+            } else {
+              // 해당 게시판이 없으면
+              alert('존재하지 않는 게시판입니다.');
+              location.href = '/home';
+            }
+          }
+        });
+      } else {
+        var Post = Parse.Object.extend("Post");
+        var Boards = Parse.Object.extend("Boards");
+        main = new Vue({
+          el: '.main',
+          data: {
+            writebox: false,
+            board: []
+          }
+        });
+        /* 
+        최근 게시물 불러오기
+        loadBoard(boardId, limit) 
+        1. boardId : 게시판 번호
+        2. limit : 불러올 갯수
+        */ 
+        loadBoard(1, 1); // 공지사항
+        loadBoard(2, 1); // 자유게시판
+      }
+    </script>
+  </body>
+</html>

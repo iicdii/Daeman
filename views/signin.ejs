@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>대학만렙</title>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/signin.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/pnotify.custom.css" rel="stylesheet" type="text/css" />
+  </head>
+ <body>
+   <div class="container">
+     <form class="form-signin">
+       <h4 class="logo"><a href="/">대학만렙</a></h4>
+       <div class="input-group">
+         <label for="inputName" class="sr-only">아이디</label>
+         <input type="text" id="myId" class="form-control" placeholder="아이디" required autofocus>
+       </div>
+       <div class="input-group">
+         <label for="inputPassword" class="sr-only">비밀번호</label>
+         <input type="password" id="myPassword" class="form-control" placeholder="비밀번호" onKeyDown="formEnter();" required>
+       </div>
+       <div class="checkbox">
+         <label>
+           <input type="checkbox" class="remember" value="remember-me"><span class="saveId">아이디 저장</span>
+         </label>
+       </div>
+       <button class="btn btn-lg btn-success btn-block" type="button" onclick="signin();">로그인</button>
+       <!-- End -->
+     </form>
+   </div>
+   <div class="footer">
+     <ul class="links">
+       <li><a href="/" class="bold">대학만렙</a></li>
+       <li>Copyright © 2015 Daeman All rights reserved.</li>
+     </ul>
+   </div>
+   <!-- js load -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+   <script src="/bootstrap/js/bootstrap.min.js"></script>
+   <script src="//www.parsecdn.com/js/parse-1.3.4.min.js"></script>
+   <script src="/javascripts/pnotify.custom.js"></script>
+   <script src="/javascripts/signin.js"></script>
+  </body>
+</html>

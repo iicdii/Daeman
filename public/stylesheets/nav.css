@@ -1,0 +1,109 @@
+ul {
+  padding-left: 0;
+}
+.menu{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  background-color: #4ca2f7;
+  z-index: 999;
+}
+.menu #menu_ul{
+  position: relative;
+  left: 0px;
+  padding: 0px 80px;
+}
+.menu #menu_ul li{
+  float: left;
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+}
+.menu #menu_ul li a{
+  color: #417fbd;
+}
+.menu #menu_ul li .glyphicon {
+  margin-top: 5px;
+  font-size: 40px;
+  color: #417fbd;
+}
+.menu #menu_ul li.active{
+  background-color: #417fbd;
+}
+.menu #menu_ul li.active a{
+  color: #fff;
+}
+.menu #menu_ul li.logo{
+  
+}
+.menu #menu_ul li.logo a{
+  color: #fff;
+}
+.menu #menu_ul li.logo h5{
+  margin: 0;
+}
+.menu #menu_ul li.active .glyphicon{
+  margin-top: 5px;
+  font-size: 40px;
+  color: #fff;
+}
+#profile {
+  position: absolute;
+  top: 0;
+  right: 80px;
+  width: 64px;
+  height: 80px;
+  background-color: #333;
+}
+#profile p.picture {
+  max-width: 64px; 
+  width: expression(this.width > 64 ? 64: true); 
+  height: 64px;
+  margin: 0;
+}
+#profile p.picture img {
+  width: 100%;
+  height: 100%;
+}
+#profile ul.setting {
+  display: none;
+  margin-top: -20px;
+  position: absolute;
+  padding: 0;
+  width: 64px;
+}
+#profile ul.setting li.setting, #profile ul.setting li.logout{
+  width: 64px;
+  height: 100%;
+}
+
+#profile ul.setting .glyphicon{
+  color: #fff;
+  font-size: 11px;
+}
+#profile ul.setting a{
+  display: block;
+  background-color: #417fbd;
+  font-size: 11px;
+  color: #fff;
+  text-decoration: none;
+  padding-left: 3px;
+}
+#profile ul.setting a:hover{
+  background-color: #4e4f50;
+}
+#profile p.user {
+  width: 100%;
+  height: 16px;
+  margin: 0;
+}
+#profile p.user a {
+  display: block;
+  font-size: 11px;
+  text-decoration: none;
+  color: #fff;
+}
+#profile p.user .glyphicon {
+  font-size: 1px;
+}

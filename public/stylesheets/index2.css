@@ -1,0 +1,148 @@
+.container_wrapper {
+  background-color: #f4645f;
+}
+
+.carousel {
+  width: 775px;
+}
+
+.login_area {
+  position: relative;
+  float: right;
+  width: 250px;
+  height: 217px;
+}
+
+.logged {
+  display: none;
+  position: relative;
+  float: right;
+  width: 250px;
+  height: 217px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.logged .btn{
+  width: 220px;
+  color: #fff;
+  background-color: #000;
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+.logged .username{
+  font-weight: bold;
+}
+
+.quick_menu {background:#DEDEDE;}
+.quick_menu h3 {display:none;}
+.quick_menu ul {list-style: none;overflow:hidden;margin:0 auto;width:1100px;height:90px;border-right:1px solid #F2F2F2;}
+.quick_menu ul li {float:left;width:353px;height:90px;line-height:90px;font-size:16px;text-align:center;border-left:1px solid #F2F2F2;}
+.quick_menu ul li a {display:block;width:100%;height:100%;color:#000;text-decoration:none;font-size:28px;}
+.quick_menu ul li a:hover {background:#BFBFBF;}
+
+.main {
+  padding: 0 60px;
+  height: 90px;
+  width: 100%;
+  border-bottom: 1px solid #dee0df;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .remember {
+  margin: 1px;
+}
+.form-signin .btn_area {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+.form-signin .btn_area a {
+  color:#000;
+  text-decoration: none;
+}
+.form-signin .bar {
+  color:#ccc;
+}
+.form-signin .saveId {
+  margin-top: 2px;
+  margin-left: -3px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+  font-size: 11px;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 15px 30px 15px 15px;
+  font-size: 15px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: 0px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 0px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.form-signin .btn {
+  width: 220px;
+  color: #fff;
+  background-color: #000;
+  font-size: 15px;
+}
+
+.container .notice_wrapper {
+  position: relative;
+  float: left;
+  margin-top: 20px;
+  margin-right: 20px;
+  padding: 21px 25px;
+  width: 290px;
+  height: 279px;
+  border: 1px solid #c6c5c5;
+  background: #fff;
+}
+
+.container .notice_wrapper .list {border-top:1px solid #e5e5e5;list-style: none;padding:0;}
+.container .notice_wrapper .list li {border-bottom:1px solid #e5e5e5;}
+.container .notice_wrapper .list li a {display:block;}
+.container .notice_wrapper .list li a:hover .subject {text-decoration:underline;}
+.container .notice_wrapper .list li a:hover .desc {text-decoration:underline;}
+.container .notice_wrapper .list li.first {padding:20px 0;}
+.container .notice_wrapper .list li.last {padding:20px 0;border-bottom:0;}
+.container .notice_wrapper .list li .subject {color:#000;display:block;font-size:13px;}
+.container .notice_wrapper .list li .date {color:#959595;font-size:11px;}
+.container .notice_wrapper .list li .desc {overflow:hidden;padding-top:3px;color:#898989;font-size:13px;line-height:1.6;}
+.container .notice_wrapper .more {text-decoration:none;position:absolute;right:25px;top:25px;color:#a3a3a3;}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}

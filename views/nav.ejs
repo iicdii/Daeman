@@ -1,0 +1,16 @@
+<nav id="nav">
+  <div class="menu">
+    <ul id="menu_ul">
+      <li class="logo"><div class="text-center"><a href="/home"><svg id="svg"></svg><h5>대학만렙</h5></a></div></li>
+      <li v-repeat="menus" v-class="active"><div class="text-center"><a v-attr="href:href"><span v-attr="class:glyphicon" aria-hidden="true"></span><h5>{{name}}</h5></a></div></li>
+      <div id="profile">
+        <p class="picture"><img v-attr="src:src"></p>
+        <ul class="setting">
+          <li class="logout"><a href="/signout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;로그아웃</a></li>
+          <li class="setting"><a href="/setting"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;내 정보</a></li>
+        </ul>
+        <p class="user"><a class="text-center" href="#">{{username}} <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span></a></p>
+      </div>
+    </ul>
+  </div>
+</nav>

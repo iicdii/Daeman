@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>대학만렙</title>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/signup.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/pnotify.custom.css" rel="stylesheet" type="text/css" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="container">
+      <form method="POST" class="form-signup" id="sign">
+        <h4 class="logo"><a href="/">대학만렙</a></h4>
+        <div class="input-group">
+          <label for="inputName" class="sr-only">아이디</label>
+          <input type="text" id="inputID" class="form-control" v-model="id" placeholder="아이디" required autofocus>
+        </div>
+        <span class="alertmsg" id="alert_id">아이디는 4글자 이상이어야 합니다.</span>
+        <div class="input-group">
+          <label for="inputPassword" class="sr-only">비밀번호</label>
+          <input type="password" id="inputPassword" class="form-control" v-model="password" placeholder="비밀번호" required>
+        </div>
+        <span class="alertmsg" id="alert_password">비밀번호는 6글자 이상이어야 합니다.</span>
+        <div class="input-group">
+          <label for="inputNickname" class="sr-only">이름</label>
+          <input type="text" id="inputNickname" class="form-control" v-model="nickname" placeholder="이름" required>
+        </div>
+        <span class="alertmsg" id="alert_nickname">이름은 2글자 이상이어야 합니다.</span>
+        <div class="select_area">
+          <select id="selectUniversity" class="selectpicker" data-live-search="true" data-width="300">
+            <option disabled="disabled" selected>학교이름</option>
+            <option v-repeat="university: universities">{{university.name}}</option>
+          </select>
+          <span class="alertmsg" id="alert_university">학교를 선택해 주세요.</span>
+          <select id="selectYear" class="selectpicker" data-width="300">
+            <option disabled="disabled" selected>입학연도</option>
+            <% var now = new Date(); var now_year = now.getFullYear(); %>
+            <% for(var sy = now_year; sy >= 2000; sy--) { %>
+            <option>
+              <%= sy + '년' %>
+            </option>
+            <% } %>
+          </select>
+          <span class="alertmsg" id="alert_year">입학연도를 선택해 주세요.</span>
+        </div>
+        <button class="btn btn-lg btn-success btn-block" type="button" onclick="signup();">회원가입</button>
+      </form>
+    </div>
+    <div class="footer">
+      <ul class="links">
+        <li><a href="/" class="bold">대학만렙</a></li>
+        <li>Copyright © 2015 Daeman All rights reserved.</li>
+      </ul>
+    </div>
+    <!-- js load -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="//www.parsecdn.com/js/parse-1.3.4.min.js"></script>
+    <script src="http://vuejs.org/js/vue.min.js"></script>
+    <script src="http://ksylvest.github.io/jquery-growl/javascripts/jquery.growl.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+    <script src="/javascripts/pnotify.custom.js"></script>
+    <script src="/javascripts/signup.js"></script>
+    <!-- End -->
+  </body>
+</html>

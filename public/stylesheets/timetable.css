@@ -1,0 +1,384 @@
+body {
+  background-color: #b5afaf;
+}
+ul {
+  list-style-type: none;
+}
+a:hover{
+  text-decoration: none;
+}
+em {
+  font-style: normal;
+}
+
+ul.buttons {
+  float: right;
+  font-size: 1px;
+}
+ul.buttons li {
+  display: inline-block;
+}
+.modal-title {
+  font-weight: bold;
+  color: #4ca2f7; 
+}
+.modal-body p {
+  clear: both;
+  padding: 10px 0;
+}
+.modal-body p label.title {
+  display: inline-block;
+  width: 100px;
+  line-height: 25px;
+}
+.modal-body p label.public {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  margin-right: 3px;
+  font-weight: normal;
+}
+.modal-body p label.public input[type=radio] {
+  margin-right: 3px;
+}
+.modal-body p input[type=checkbox] {
+  margin-right: 3px;
+}
+.modal-body p input[type="text"] {
+  display: inline-block;
+  width: 380px;
+}
+
+
+aside{
+  position: fixed;
+  border: 1px solid #cec4c2;
+  border-width: 0 1px 0 0;
+  z-index: 0;
+  top: 80px;
+  width: 350px;
+  height: 100%;
+  overflow: auto;
+  background-color: #fff;
+}
+aside div.title {
+  margin: 20px;
+  line-height: 30px;
+  overflow: hidden;
+}
+aside div.title h2{
+  color: #4ca2f7;
+  font-size: 18px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+aside div.title ul{
+  margin: 0;
+}
+
+aside div.profile_title {
+  margin: 0;
+  padding: 15px;
+  height: 80px;
+  line-height: 30px;
+  overflow: hidden;
+}
+aside div.profile_title img.picture {
+  float: left;
+  margin-right: 15px;
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+}
+aside div.profile_title h2{
+  margin: 5px 0;
+  height: 20px;
+  line-height: 18px;
+  color: #4ca2f7;
+  font-size: 18px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+aside div.profile_title p {
+  float: left;
+  height: 15px;
+  line-height: 11px;
+  color: #999;
+  font-size: 11px;
+}
+
+aside div.information {
+  margin: 25px;
+  margin-top: 0;
+}
+aside div.information p {
+  line-height: 15px;
+  color: #333;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+aside div.information .friendCount{
+  font-weight: bold;
+}
+aside div.information ul{
+  padding: 0;
+  height: 30px;
+}
+aside div.information ul li {
+  float: left;
+  margin-right: 10px;
+  height: 15px;
+  color: #999;
+  font-size: 11px;
+}
+
+aside ol.list {
+  border-top: 1px solid #ede4e2;
+  padding: 0;
+}
+
+aside ol.list li a{
+  display: block;
+  padding: 0 25px;
+  border-bottom: 1px solid #ede4e2;
+  border-width: 1px 0;
+  height: 39px;
+  line-height: 39px;
+  color: #bda9a6;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #fbf9f9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+aside ol.list li a:hover {
+	color: #333;
+  background-color: #ede4e2;
+}
+
+aside ol.list li.current a{
+  border-left: 3px solid #4ca2f7;
+  display: block;
+  padding: 0 25px;
+  border-bottom: 1px solid #ede4e2;
+  height: 39px;
+  line-height: 39px;
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.content{
+  position: absolute;
+  margin: 0px;
+  width: 1090px;
+  left: 350px;
+  top: 80px;
+}
+.content div.main{
+  position: relative;
+  display: block;
+  width: 100%;
+}
+.content div.main .table{
+  margin: 0;
+}
+.content div.main .tablehead, .content .tablebody{
+  width: 100%;
+}
+.content div.main .tablehead{
+  background-color: #e7eaeb;
+}
+.content div.main .tablebody{
+  background-color: #f9fbfb;
+}
+.content div.main .tablehead tr th, .content .tablehead tr td {
+  border-width: 1px;
+  border-style: solid;
+  border-color: #c5ced0;
+  color: #999;
+  font-weight: normal;
+  text-align: center;
+}
+.content div.main .tablehead div.grids{
+  position: absolute;
+  width: 195px;
+  height: 100%;
+  top: 0;
+}
+.content div.main .tablehead div.grid{
+  position: absolute;
+  width: 100%;
+  font-size: 12px;
+}
+
+.content div.main .table th {
+  width: 107px;
+  color: #999;
+  font-weight: normal;
+  text-align: center;
+}
+.content div.main .table td {
+  width: 196px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.content div.main .tablebody tr th {
+  height: 39px;
+  line-height: 39px;
+}
+.content div.main .tablebody tr td {
+  padding: 0;
+}
+.content div.main .tablebody tr td p {
+  margin: 0 10px 10px 10px;
+}
+.content div.main .tablehead tr td div.grids div.grid div.subject {
+  position: relative; 
+  text-align: left;
+  z-index: 10;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.content div.main .tablehead tr td div.grids div.grid div.subject h3 {
+  margin: 10px 10px 0 10px;
+  font-size: 14px;
+  color: #000;
+  font-weight: bold;
+}
+.content div.main .tablehead tr td div.grids div.grid div.subject p {
+  margin: 0px 10px 10px 10px;
+}
+.content div.main .tablehead tr td div.grids div.grid div.subject p span {
+  font-size: 12px;
+  color: #666;
+}
+.content div.main .tablehead tr td div.grids div.grid div.subject p em {
+  font-size: 12px;
+  color: #666;
+  font-weight: bold;
+}
+.content div.main .tablehead tr td div.grids div.grid div.subject ul.status {
+  float: right;
+  margin: 10px 10px 0 0;
+}
+.content div.main .tablehead tr td div.grids div.grid div.subject ul.status li {
+  float: left;
+  font-size: 13px;
+  color: #333;
+  margin: 0px 2px;
+  cursor: pointer;
+}
+.content div.main div.adder {
+  position: absolute;
+  z-index: 20;
+  bottom: 20px;
+  left: 50%;
+}
+#addsubject {
+  position: absolute;
+  background-color: #fff;
+  padding: 25px;
+  z-index: 30;
+  bottom: 0px;
+  border: 1px solid #c5ced0;
+  border-bottom: 0;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  left: 25%;
+}
+#addsubject h2 {
+  margin-bottom: 20px;
+  color: #4ca2f7;
+  font-size: 14px;
+  font-weight: bold;
+}
+#addsubject dl dt {
+  clear: both;
+  float: left;
+  margin-bottom: 5px;
+  width: 80px;
+  height: 30px;
+  line-height: 30px;
+  color: #999;
+  font-size: 12px;
+  font-weight: bold;
+}
+#addsubject dl dd {
+  float: left;
+  margin-bottom: 5px;
+}
+#addsubject dl dd input[type="text"] {
+  width: 445px;
+}
+#addsubject dl dd div.time{
+  width: 445px;
+  padding: 5px;
+  border: 1px solid #c5ced0;
+}
+#addsubject dl dd div.time ul.week {
+  margin-bottom: 0;
+}
+#addsubject dl dd div.time ul.week li .remove{
+  float: right;
+}
+#addsubject dl dd div.time ul.week li.inactive {
+  float: left;
+  margin-right: 1px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  cursor: pointer;
+  color: #999;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #e7eaeb;
+  text-align: center;
+}
+#addsubject dl dd div.time ul.week li.active {
+  float: left;
+  margin-right: 1px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  background-color: #4ca2f7;
+}
+#addsubject dl dd div.time div.form-inline{
+  clear: left;
+  padding-top: 5px;
+  margin-bottom: 0;
+}
+#addsubject dl dd div.time select.form-control{
+  width: auto;
+}
+#addsubject dl dd .new {
+  margin-top: 5px;
+  line-height: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  float: right;
+}
+#addsubject div.submit {
+  text-align: right;
+}
+#svg{
+  width: 54px;
+  height: 54px;
+}

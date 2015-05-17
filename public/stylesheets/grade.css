@@ -1,0 +1,148 @@
+body {
+  background-color: #b5afaf;
+}
+ul {
+  list-style-type: none;
+}
+a:hover{
+  text-decoration: none;
+}
+
+ul.buttons {
+  float: right;
+}
+.modal-title {
+  font-weight: bold;
+  color: #4ca2f7; 
+}
+
+aside{
+  position: fixed;
+  border: 1px solid #cec4c2;
+  border-width: 0 1px 0 0;
+  z-index: 0;
+  top: 80px;
+  width: 350px;
+  height: 100%;
+  overflow: auto;
+  background-color: #fff;
+}
+aside div.title {
+  margin: 20px;
+  line-height: 30px;
+  overflow: hidden;
+}
+aside div.title h2{
+  color: #4ca2f7;
+  font-size: 18px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+aside ol.list {
+  border-top: 1px solid #ede4e2;
+  padding: 0;
+}
+
+aside ol.list li a{
+  display: block;
+  padding: 0 25px;
+  border-bottom: 1px solid #ede4e2;
+  border-width: 1px 0;
+  height: 39px;
+  line-height: 39px;
+  color: #bda9a6;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #fbf9f9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+aside ol.list li a:hover {
+	color: #333;
+  background-color: #ede4e2;
+}
+
+aside ol.list li.current a{
+  border-left: 3px solid #4ca2f7;
+  display: block;
+  padding: 0 25px;
+  border-bottom: 1px solid #ede4e2;
+  height: 39px;
+  line-height: 39px;
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.content{
+  position: absolute;
+  margin: 20px;
+  left: 350px;
+  top: 80px;
+}
+.content div.main{
+  display: block;
+  width: 100%;
+}
+
+#svg{
+  width: 54px;
+  height: 54px;
+}
+.panel .list-group{
+  padding: 10px;
+  max-height: 340px;
+  overflow-y: scroll;
+}
+.panel-body {
+  padding: 0px 8px;
+}
+.panel-body ul{
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+}
+.panel-body .left {
+  position: relative;
+  float: left;
+}
+.panel-body .right {
+  position: relative;
+  float: left;
+}
+.panel-body .left li {
+  width: 60px;
+  padding: 10px 5px;
+}
+.panel-body .left .withinput {
+  padding: 20px 5px;
+}
+.panel-body .right li {
+  width: 60px;
+  padding: 10px 5px;
+}
+.panel-body .right .withinput {
+  margin-top: 2px;
+  margin-bottom: 1px;
+}
+
+.input-group{
+  width: 100%;
+}
+
+.input-group input[type="text"]{
+  width: 62%;
+}
+
+.input-group input[type="number"]{
+  width: 23%;
+}

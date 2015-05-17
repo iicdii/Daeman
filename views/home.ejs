@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>대학만렙</title>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/home.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/nav.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/pnotify.custom.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <!-- Menu -->
+    <% include nav %>
+    <!-- Menu End-->
+    <!-- Aside -->
+    <aside id="aside">
+      <div class="title"><h2>{{aside_title}}</h2></div>
+      <ol class="list">
+        <li><a href="/board/1">공지사항</a></li>
+      </ol>
+    </aside>
+    <!-- Aside End-->
+    <!-- Content -->
+    <div class="content">
+      <div class="main">
+        <div class="boards">
+        <a class="board" v-attr="href:link" v-repeat="board">
+          <span v-attr="class:icon" aria-hidden="true"></span>
+          <h2>{{name}}</h2>
+          <article>
+            <img v-attr="src:picture" class="picture">
+            <p>{{text}}</p>
+            <ul class="status">
+              <li v-class="likeClass, active: isLikeActive"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> {{likeCount}}</li>
+              <li v-class="commentClass, active: isCommentActive"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> {{commentCount}}</li>
+            </ul>
+          </article>
+        </a>
+        </div>
+      </div>
+    </div>
+    <!-- Content End-->
+    <!-- js load -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="//www.parsecdn.com/js/parse-1.3.4.min.js"></script>
+    <script src="http://vuejs.org/js/vue.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/snap.svg/0.3.0/snap.svg-min.js"></script>
+    <script src="/javascripts/pnotify.custom.js"></script>
+    <script src="/javascripts/nav.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.transit/0.9.12/jquery.transit.min.js"></script>
+    <script src="http://sugarjs.com/release/current/sugar.min.js"></script>
+    <script src="/javascripts/home.js"></script>
+    <!-- End -->
+    <script>
+      nav.menus[0].active = 'active';
+    </script>
+  </body>
+</html>
